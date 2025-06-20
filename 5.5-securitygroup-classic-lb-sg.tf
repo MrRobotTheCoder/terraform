@@ -14,4 +14,16 @@ module "loadbalancer-sg" {
   # Egress Rules and CIDR Blocks : all-all Open
   egress_rules = ["all-all"]
   tags = local.common_tags
+
+  ingress_with_cidr_blocks = [
+    
+    {
+      from_port   = 81
+      to_port     = 81
+      protocol    = 6
+      description = "Allow port 81 from Internet"
+      cidr_blocks = "0.0.0.0/0"
+    },
+  ]
+
 }
