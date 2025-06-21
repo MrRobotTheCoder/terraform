@@ -1,11 +1,11 @@
 # EC2 Instance that will be created in VPC Private Subnets.
 
-module "ec2-private-instance" {
+module "ec2-private-instance_app1" {
   depends_on = [ module.vpc ] 
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.8.0"
 
-  name                      = "${var.environment}-private-ec2-vm"
+  name                      = "${var.environment}-private-ec2-app1"
   ami                       = data.aws_ami.amz_linux2.id
   instance_type             = var.instance_type
   key_name                  = var.instance_keypair
