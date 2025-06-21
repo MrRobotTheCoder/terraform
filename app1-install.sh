@@ -1,13 +1,10 @@
 #!/bin/bash
-# Update system and install Apache
 sudo yum update -y
 sudo yum install -y httpd
-
-# Enable and start Apache
 sudo systemctl enable httpd
 sudo systemctl start httpd
 
-# Create the homepage with a descriptive welcome message
+# Homepage
 sudo tee /var/www/html/index.html > /dev/null <<'EOF'
 <!DOCTYPE html>
 <html>
@@ -46,6 +43,20 @@ sudo tee /var/www/html/index.html > /dev/null <<'EOF'
             Thank you for joining us as we watch Saanvika’s story unfold. We hope you enjoy being a part of her journey as much as we do!
         </p>
     </div>
+</body>
+</html>
+EOF
+
+# App1 path for health check
+sudo mkdir -p /var/www/html/app1
+sudo tee /var/www/html/app1/index.html > /dev/null <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Saanvika's World - App1!</title>
+</head>
+<body>
+    <h1>This is App1 - Saanvika's World!</h1>
 </body>
 </html>
 EOF

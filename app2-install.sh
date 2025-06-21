@@ -1,13 +1,10 @@
 #!/bin/bash
-# Ensure Apache is installed and running
 sudo yum install -y httpd
 sudo systemctl enable httpd
 sudo systemctl start httpd
 
-# Create blog directory
+# Blog page
 sudo mkdir -p /var/www/html/blog
-
-# Create the first blog post
 sudo tee /var/www/html/blog/first-entry.html > /dev/null <<'EOF'
 <!DOCTYPE html>
 <html>
@@ -49,6 +46,20 @@ sudo tee /var/www/html/blog/first-entry.html > /dev/null <<'EOF'
             We invite you to join us in celebrating Saanvika’s journey. Your blessings, love, and support mean the world to us. Together, let’s cherish these moments and create a tapestry of memories that Saanvika can look back on with pride and joy.
         </p>
     </div>
+</body>
+</html>
+EOF
+
+# App2 path for health check
+sudo mkdir -p /var/www/html/app2
+sudo tee /var/www/html/app2/index.html > /dev/null <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Saanvika's World - App2!</title>
+</head>
+<body>
+    <h1>This is App2 - Saanvika's Blog!</h1>
 </body>
 </html>
 EOF
