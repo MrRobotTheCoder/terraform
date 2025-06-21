@@ -1,6 +1,6 @@
 #!/bin/bash
-sudo yum update -y
-sudo yum install -y httpd
+sudo dnf update -y
+sudo dnf install -y httpd
 sudo systemctl enable httpd
 sudo systemctl start httpd
 
