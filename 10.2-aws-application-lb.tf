@@ -147,14 +147,14 @@ module "alb" {
   ## k = ec2_instance
   ## v = ec2_instance_details
   resource "aws_lb_target_group_attachment" "target_group_1" {
-  for_each = {for k, v in module.ec2-private-instance: k => v}
+  for_each = {for k, v in module.ec2-private-instance_app1: k => v}
   target_group_arn = module.alb.target_groups["target_group_1"].arn
   target_id        = each.value.id
   port             = 80
 }
 
 resource "aws_lb_target_group_attachment" "target_group_2" {
-  for_each = {for k, v in module.ec2-private-instance: k => v}
+  for_each = {for k, v in module.ec2-private-instance_app2: k => v}
   target_group_arn = module.alb.target_groups["target_group_2"].arn
   target_id        = each.value.id
   port             = 80
