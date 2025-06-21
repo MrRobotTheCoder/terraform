@@ -160,7 +160,7 @@ resource "aws_lb_target_group_attachment" "target_group_2" {
   port             = 80
 }
 
-# Temporary App Outputs
+/*# Temporary App Outputs
 output "test_ec2_private" {
   value = {for k, v in module.ec2-private-instance: k => v}
-}
+}*/
