@@ -57,7 +57,7 @@ module "alb" {
           }]
           conditions = [{
             host_header = {
-              values = ["/app1*"]
+              values = ["/app1/*"]
             }
           }]
         }# End of myapp1-rule
@@ -78,7 +78,7 @@ module "alb" {
           }]
           conditions = [{
             host_header = {
-              values = ["/app2*"]
+              values = ["/app2/*"]
             }
           }]
         }# End of myapp2-rule Block
