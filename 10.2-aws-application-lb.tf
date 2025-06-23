@@ -91,7 +91,7 @@ module "alb" {
           priority = 3
           actions = [{
             type = "redirect"
-            status_code = "HTTPS_302"
+            status_code = "HTTP_302"
             host = "stacksimplify.com"
             path = "/aws-eks/"
             query = ""
