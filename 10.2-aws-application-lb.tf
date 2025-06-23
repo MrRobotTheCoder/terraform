@@ -109,7 +109,7 @@ module "alb" {
           priority = 4
           actions = [{
             type = "redirect"
-            status_code = "HTTPS_302"
+            status_code = "HTTP_302"
             host = "stacksimplify.com"
             path = "/azure-aks/azure-kubernetes-service-introduction/"
             query = ""
