@@ -56,8 +56,8 @@ module "alb" {
             }
           }]
           conditions = [{
-            path_pattern = {
-              values = ["/app1/*"]
+            host_header = {
+              values = [var.app1_dns_name]
             }
           }]
         }# End of myapp1-rule
@@ -77,8 +77,8 @@ module "alb" {
             }
           }]
           conditions = [{
-            path_pattern = {
-              values = ["/app2/*"]
+            host_header = {
+              values = [var.app2_dns_name]
             }
           }]
         }# End of myapp2-rule Block

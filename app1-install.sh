@@ -1,11 +1,22 @@
 #!/bin/bash
+
+# Optional: Exit on error
+set -e
+
+# Update and install Apache
 sudo dnf update -y
 sudo dnf install -y httpd
+
+# Enable and start Apache
 sudo systemctl enable httpd
 sudo systemctl start httpd
 
-# Homepage
-sudo tee /var/www/html/index.html > /dev/null <<'EOF'
+# Create index.html in the root web directory
+echo '<h1>Hello! This is Abinash, learning Terraform now.</h1>' | sudo tee /var/www/html/index.html
+
+# Create app1 directory and index.html
+sudo mkdir -p /var/www/html/app1
+cat <<'EOF' | sudo tee /var/www/html/app1/index.html
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,16 +58,6 @@ sudo tee /var/www/html/index.html > /dev/null <<'EOF'
 </html>
 EOF
 
-# App1 path for health check
-sudo mkdir -p /var/www/html/app1
-sudo tee /var/www/html/app1/index.html > /dev/null <<'EOF'
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Saanvika's World - App1!</title>
-</head>
-<body>
-    <h1>This is App1 - Saanvika's World!</h1>
-</body>
-</html>
-EOF
+# Fetch EC2 instance metadata (IMDSv2)
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/dynamic/instance-identity/document | sudo tee /var/www/html/app1/metadata.html
