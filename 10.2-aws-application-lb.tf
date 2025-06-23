@@ -42,6 +42,7 @@ module "alb" {
       rules = {
         # Rule-1: myapp1-rule
         myapp1-rule = {
+          priority = 1
           actions = [{
             type = "weighted-forward"
             target_groups = [
@@ -56,13 +57,15 @@ module "alb" {
             }
           }]
           conditions = [{
-            host_header = {
-              values = [var.app1_dns_name]
+            http_header = {
+              http_header_name = "custom-header"
+              values = ["app-1", "app1", "my-app-1"]
             }
           }]
         }# End of myapp1-rule
         # Rule-2: myapp2-rule
         myapp2-rule = {
+          priority = 2
           actions = [{
             type = "weighted-forward"
             target_groups = [
@@ -77,13 +80,50 @@ module "alb" {
             }
           }]
           conditions = [{
-            host_header = {
-              values = [var.app2_dns_name]
+            http_header = {
+              http_header_name = "custom-header"
+              values = ["app-2", "app2", "my-app-2"]
             }
           }]
         }# End of myapp2-rule Block
-      }# End Rules Block
-    }# End my-https-listener Block
+        # Rule-3: Query String Redirect Rule
+        my-qs-redirect-rule = {
+          priority = 3
+          actions = [{
+            type = "redirect"
+            status_code = "HTTPS_302"
+            host = "stacksimplify.com"
+            path = "/aws-eks/"
+            query = ""
+            protocol = "HTTPS"
+          }]
+          conditions = [{
+            query_string = {
+              key = "website"
+              value = "aws-eks"
+            }
+          }]
+        }# End of Query String Redirect Rule
+        # Rule-4: Host Header Redirect Rule
+        my-hh-redirect_rule = {
+          priority = 4
+          actions = [{
+            type = "redirect"
+            status_code = "HTTPS_302"
+            host = "stacksimplify.com"
+            path = "/azure-aks/azure-kubernetes-service-introduction/"
+            query = ""
+            protocol = "HTTPS"
+          }]
+          conditions = [{
+            host_header = {
+              values = ["azure-aks11.hellosaanvika.com"]
+            }
+          }]
+        }# End of Host Header Redirect Rule
+
+      }# End of Rules Block
+    }# End of Listener Block
     
   }# End of Listeners Block
 

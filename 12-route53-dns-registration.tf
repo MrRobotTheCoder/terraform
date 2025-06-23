@@ -3,7 +3,7 @@
 # Default DNS
 resource "aws_route53_record" "default_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
-  name    = "myapps.hellosaanvika.com"
+  name    = "myapps11.hellosaanvika.com"
   type    = "A"
   
   alias {
@@ -16,7 +16,7 @@ resource "aws_route53_record" "default_dns" {
 # App1 DNS
 resource "aws_route53_record" "app1_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
-  name    = var.app1_dns_name
+  name    = "azure-aks11.hellosaanvika.com"
   type    = "A"
   
   alias {
@@ -26,7 +26,7 @@ resource "aws_route53_record" "app1_dns" {
   }
 }
 
-# App2 DNS
+/*# App2 DNS
 resource "aws_route53_record" "app2_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
   name    = var.app2_dns_name
@@ -37,4 +37,4 @@ resource "aws_route53_record" "app2_dns" {
     zone_id                = module.alb.zone_id
     evaluate_target_health = true
   }
-}
+}*/
