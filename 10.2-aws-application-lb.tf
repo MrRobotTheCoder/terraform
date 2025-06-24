@@ -10,7 +10,6 @@ module "alb" {
   security_groups = [module.loadbalancer-sg.security_group_id]
   tags = local.common_tags
   
-
   # Listeners
   listeners = {
     # Listner-1: my-http-https-redirect
