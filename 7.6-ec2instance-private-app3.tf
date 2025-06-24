@@ -1,0 +1,19 @@
+# AWS EC2 Instance Terraform Module
+# EC2 Instances that will be created in VPC Private Subnets for App3
+module "ec2-private-instance_app3" {
+  depends_on = [ module.vpc ] # VERY VERY IMPORTANT else userdata webserver provisioning will fail
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "5.8.0"
+
+  # insert the 10 required variables here
+  name                   = "${var.environment}-private-ec2-app3"
+  ami                    = data.aws_ami.amz_linux2.id
+  instance_type          = var.instance_type
+  key_name               = var.instance_keypair
+  vpc_security_group_ids    = [module.private-sg.security_group_id]
+  for_each = toset(["0", "1"])
+  subnet_id = element(module.vpc.private_subnets, tonumber(each.key))
+  
+  user_data =  templatefile("app3-ums-install.tmpl",{rds_db_endpoint = module.rdsdb.db_instance_address})    
+  tags = local.common_tags
+}

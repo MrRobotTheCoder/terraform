@@ -1,9 +1,9 @@
 # AWS Route53 DNS Registration
 
-# Default DNS
-resource "aws_route53_record" "default_dns" {
+# DNS Registration
+resource "aws_route53_record" "apps_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
-  name    = "myapps11.hellosaanvika.com"
+  name    = "dns-to-db.hellosaanvika.com"
   type    = "A"
   
   alias {
@@ -13,7 +13,7 @@ resource "aws_route53_record" "default_dns" {
   }
 }
 
-# App1 DNS
+/*# App1 DNS
 resource "aws_route53_record" "app1_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
   name    = "azure-aks11.hellosaanvika.com"
@@ -26,7 +26,7 @@ resource "aws_route53_record" "app1_dns" {
   }
 }
 
-/*# App2 DNS
+# App2 DNS
 resource "aws_route53_record" "app2_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
   name    = var.app2_dns_name

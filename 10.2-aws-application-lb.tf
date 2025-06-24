@@ -9,6 +9,7 @@ module "alb" {
   subnets = module.vpc.public_subnets
   security_groups = [module.loadbalancer-sg.security_group_id]
   tags = local.common_tags
+  
 
   # Listeners
   listeners = {
@@ -42,7 +43,7 @@ module "alb" {
       rules = {
         # Rule-1: myapp1-rule
         myapp1-rule = {
-          priority = 1
+          priority = 10
           actions = [{
             type = "weighted-forward"
             target_groups = [
@@ -65,7 +66,7 @@ module "alb" {
         }# End of myapp1-rule
         # Rule-2: myapp2-rule
         myapp2-rule = {
-          priority = 2
+          priority = 20
           actions = [{
             type = "weighted-forward"
             target_groups = [
@@ -86,41 +87,28 @@ module "alb" {
             }
           }]
         }# End of myapp2-rule Block
-        # Rule-3: Query String Redirect Rule
-        my-qs-redirect-rule = {
-          priority = 3
+        # Rule-3: myapp3-rule
+        myapp3-rule = {
+          priority = 30          
           actions = [{
-            type = "redirect"
-            status_code = "HTTP_302"
-            host = "stacksimplify.com"
-            path = "/aws-eks/"
-            query = ""
-            protocol = "HTTPS"
-          }]
-          conditions = [{
-            query_string = {
-              key = "website"
-              value = "aws-eks"
+            type = "weighted-forward"
+            target_groups = [
+              {
+                target_group_key = "target_group_3"
+                weight           = 1
+              }
+            ]
+            stickiness = {
+              enabled  = true
+              duration = 3600
             }
           }]
-        }# End of Query String Redirect Rule
-        # Rule-4: Host Header Redirect Rule
-        my-hh-redirect_rule = {
-          priority = 4
-          actions = [{
-            type = "redirect"
-            status_code = "HTTP_302"
-            host = "stacksimplify.com"
-            path = "/azure-aks/azure-kubernetes-service-introduction/"
-            query = ""
-            protocol = "HTTPS"
-          }]
           conditions = [{
-            host_header = {
-              values = ["azure-aks11.hellosaanvika.com"]
+            path_pattern = {
+              values = ["/*"]
             }
           }]
-        }# End of Host Header Redirect Rule
+        }# End of myapp3-rule Block
 
       }# End of Rules Block
     }# End of Listener Block
@@ -181,6 +169,31 @@ module "alb" {
            
       tags = local.common_tags      
     }
+
+    # Target Group-3: target_group_3       
+   target_group_3 = {
+      # VERY IMPORTANT: We will create aws_lb_target_group_attachment resource separately, refer above GitHub issue URL.
+      create_attachment = false
+      name_prefix                       = "mytg3-"
+      protocol                          = "HTTP"
+      port                              = 8080
+      target_type                       = "instance"
+      deregistration_delay              = 10
+      load_balancing_cross_zone_enabled = false
+      protocol_version = "HTTP1"
+      health_check = {
+        enabled             = true
+        interval            = 30
+        path                = "/login"
+        port                = "traffic-port"
+        healthy_threshold   = 3
+        unhealthy_threshold = 3
+        timeout             = 6
+        protocol            = "HTTP"
+        matcher             = "200-399"
+      }
+      tags = local.common_tags # Target Group Tags 
+    }# END of Target Group-3: target_group_3
   }
 }
   # Load Balancer Target Group Attachment 
@@ -200,7 +213,10 @@ resource "aws_lb_target_group_attachment" "target_group_2" {
   port             = 80
 }
 
-/*# Temporary App Outputs
-output "test_ec2_private" {
-  value = {for k, v in module.ec2-private-instance: k => v}
-}*/
+# target_group_3: LB Target Group Attachment
+resource "aws_lb_target_group_attachment" "target_group_3" {
+  for_each = {for k,v in module.ec2-private-instance_app3: k => v}
+  target_group_arn = module.alb.target_groups["target_group_3"].arn
+  target_id        = each.value.id
+  port             = 8080
+}

@@ -32,6 +32,12 @@ output "app2_ec2_private_instance_ids" {
   value = [for ec2private in module.ec2-private-instance_app2: ec2private.id ]   
 }
 
+## App3 ec2_private_instance_ids
+output "app3_ec2_private_instance_ids" {
+  description = "List of IDs of instances"
+  value = [for ec2private in module.ec2-private-instance_app3: ec2private.id ]   
+}
+
 ## App2 ec2_private_ip
 output "app2_ec2_private_ip" {
   description = "List of private IP addresses assigned to the instances"
