@@ -15,7 +15,7 @@ resource "aws_autoscaling_policy" "avg_cpu_utilization" {
 }
 
 # Scaling Policy 2 : Based on ALB Target Requests
-resource "aws_autoscaling_policy" "alb_target_requests" {
+/*resource "aws_autoscaling_policy" "alb_target_requests" {
   name                   = "alb_target_requests"
   policy_type            = "TargetTrackingScaling"
   autoscaling_group_name = aws_autoscaling_group.my_asg.id
@@ -28,4 +28,4 @@ resource "aws_autoscaling_policy" "alb_target_requests" {
     target_value = 10.0
   }  
 }
-
+*/
