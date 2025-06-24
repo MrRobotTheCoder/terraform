@@ -3,7 +3,7 @@
 # DNS Registration
 resource "aws_route53_record" "apps_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id
-  name    = "dns-to-db.hellosaanvika.com"
+  name    = "asg-lt.hellosaanvika.com"
   type    = "A"
   
   alias {

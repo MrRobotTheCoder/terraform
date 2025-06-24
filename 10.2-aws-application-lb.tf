@@ -23,8 +23,8 @@ module "alb" {
       }
       
     }# End of Listner1 - my-http-https-redirect
-    #
-    # Start of Listner2 - my-https-listener
+    # 
+    # Start of Listner2 - my-https-listener 
     my-https-listener = {
       port                        = 443
       protocol                    = "HTTPS"
@@ -36,10 +36,26 @@ module "alb" {
         content_type = "text/plain"
         message_body = "Fixed Static message - for Root Context"
         status_code  = "200"
-      }# End of Fixed Response
-
+      }# End of Fixed Response 
+       https_listener_rules = [
+    # Rule-1: /app1* should go to App1 EC2 Instances
+    { 
+      https_listener_index = 0
+      priority = 1
+      actions = [
+        {
+          type               = "forward"
+          target_group_index = 0
+        }
+      ]
+      conditions = [{
+        path_patterns = ["/*"]
+      }]
+    },  
+  ]
+  tags = local.common_tags # ALB Tags
       # Load Balancer Rules
-      rules = {
+      /*rules = {
         # Rule-1: myapp1-rule
         myapp1-rule = {
           priority = 10
@@ -109,10 +125,10 @@ module "alb" {
           }]
         }# End of myapp3-rule Block
 
-      }# End of Rules Block
+      } */ # End of Rules Block
     }# End of Listener Block
     
-  }# End of Listeners Block
+  }# End of Listeners Block 
 
   # Target Groups1
   target_groups = {
@@ -129,7 +145,7 @@ module "alb" {
       health_check = {
         enabled             = true
         interval            = 30
-        path                = "/app1/"
+        path                = "/app1/index.html"
         port                = "traffic-port"
         healthy_threshold   = 3
         unhealthy_threshold = 3
@@ -142,8 +158,8 @@ module "alb" {
     }
   
 
-# Target Groups2
-  
+# Target Groups2 
+/*  
     target_group_2 = {
       create_attachment = false
       name_prefix                       = "mytg2-"
@@ -193,7 +209,7 @@ module "alb" {
       }
       tags = local.common_tags # Target Group Tags 
     }# END of Target Group-3: target_group_3
-  }
+  } 
 }
   # Load Balancer Target Group Attachment 
   ## k = ec2_instance
@@ -218,4 +234,6 @@ resource "aws_lb_target_group_attachment" "target_group_3" {
   target_group_arn = module.alb.target_groups["target_group_3"].arn
   target_id        = each.value.id
   port             = 8080
+}*/
+  }
 }
