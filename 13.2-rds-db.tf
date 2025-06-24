@@ -42,7 +42,7 @@ module "rdsdb" {
   performance_insights_enabled          = true
   performance_insights_retention_period = 7
   create_monitoring_role                = false
-  monitoring_interval                   = 60
+  monitoring_interval                   = 0
 
   parameters = [
     {
