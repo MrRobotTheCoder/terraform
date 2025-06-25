@@ -5,7 +5,7 @@ resource "aws_autoscaling_group" "my_asg" {
   min_size           = 2
   vpc_zone_identifier = module.vpc.private_subnets
 
-  target_group_arns = [module.alb.target_groups_arns[0]]
+  target_group_arns = [module.alb.target_groups["target_group_1"].arn]
 
   health_check_type = "EC2"
   health_check_grace_period = 300
