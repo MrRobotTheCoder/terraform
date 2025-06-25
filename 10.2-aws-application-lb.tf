@@ -1,5 +1,5 @@
 # AWS Application Load Balancers
-module "alb" {
+/*module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.17.0"
 
@@ -85,4 +85,4 @@ module "alb" {
       tags = local.common_tags
     }
   }
-}
+}*/

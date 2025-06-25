@@ -1,4 +1,4 @@
-resource "aws_autoscaling_group" "my_asg" {
+/*resource "aws_autoscaling_group" "my_asg" {
   name_prefix   = "myasg-"
   desired_capacity   = 2
   max_size           = 10
@@ -28,4 +28,4 @@ resource "aws_autoscaling_group" "my_asg" {
     value               = "Web-Team"
     propagate_at_launch = true
   }
-}
+}*/
