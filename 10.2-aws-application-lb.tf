@@ -35,29 +35,29 @@ module "alb" {
         target_group_key = "target_group_1"
       }
 
-      # If you want to add rules, you can do so here (optional)
-      # rules = {
-      #   myapp1-rule = {
-      #     actions = [{
-      #       type = "weighted-forward"
-      #       target_groups = [
-      #         {
-      #           target_group_key = "target_group_1"
-      #           weight           = 1
-      #         }
-      #       ]
-      #       stickiness = {
-      #         enabled  = true
-      #         duration = 3600
-      #       }
-      #     }]
-      #     conditions = [{
-      #       path_pattern = {
-      #         values = ["/*"]
-      #       }
-      #     }]
-      #   }
-      # }
+       #If you want to add rules, you can do so here (optional)
+       rules = {
+         myapp1-rule = {
+           actions = [{
+             type = "weighted-forward"
+             target_groups = [
+               {
+                 target_group_key = "target_group_1"
+                 weight           = 1
+               }
+             ]
+             stickiness = {
+               enabled  = true
+               duration = 3600
+             }
+           }]
+           conditions = [{
+             path_pattern = {
+               values = ["/*"]
+             }
+           }]
+         }
+       }
     }
   }
 
