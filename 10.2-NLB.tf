@@ -9,16 +9,8 @@ module "nlb" {
   security_groups = [module.loadbalancer-sg.security_group_id]
 
   # https://github.com/hashicorp/terraform-provider-aws/issues/17281
-  # subnets = module.vpc.private_subnets
-
-  # Use `subnet_mapping` to attach EIPs
-  subnet_mapping = [for i, eip in aws_eip.this :
-    {
-      allocation_id = eip.id
-      subnet_id     = module.vpc.private_subnets[i]
-    }
-  ]
-
+  subnets = module.vpc.private_subnets
+ 
   # For example only
   enable_deletion_protection = false
 

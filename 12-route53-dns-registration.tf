@@ -7,8 +7,8 @@ resource "aws_route53_record" "apps_dns" {
   type    = "A"
   
   alias {
-    name                   = module.alb.dns_name
-    zone_id                = module.alb.zone_id
+    name                   = module.nlb.dns_name
+    zone_id                = module.nlb.zone_id
     evaluate_target_health = true
   }
 }
