@@ -1,4 +1,4 @@
-module "alb" {
+module "nlb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.17.0"
 
