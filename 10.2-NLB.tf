@@ -9,7 +9,7 @@ module "nlb" {
   security_groups = [module.loadbalancer-sg.security_group_id]
 
   # https://github.com/hashicorp/terraform-provider-aws/issues/17281
-  subnets = module.vpc.private_subnets
+  subnets = module.vpc.public_subnets
  
   # For example only
   enable_deletion_protection = false
