@@ -2,7 +2,7 @@ module "nlb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.17.0"
 
-  name_prefix = "my-nlb-"
+  name_prefix = "mynlb-"
   load_balancer_type               = "network"
   vpc_id                           = module.vpc.vpc_id
   dns_record_client_routing_policy = "availability_zone_affinity"
