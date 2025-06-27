@@ -1,5 +1,5 @@
 # Security Group for Classic Load Balancer
-module "loadbalancer-sg" {
+module "loadbalancer_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.0"
 
