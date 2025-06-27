@@ -1,1 +1,0 @@
-# Place holder for NLB Loadbalancer Variables.
